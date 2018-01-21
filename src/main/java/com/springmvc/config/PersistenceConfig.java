@@ -17,11 +17,12 @@ import java.util.Properties;
 public class PersistenceConfig {
 
     @Bean
-    DataSource dataSource(){
+    DataSource dataSource1(){
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
         driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/poc");
         driverManagerDataSource.setUsername("root");
+        driverManagerDataSource.setPassword("igdefault");
         return driverManagerDataSource;
     }
 
@@ -36,7 +37,7 @@ public class PersistenceConfig {
         Properties jpaProperties= new Properties();
         jpaProperties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
         jpaProperties.setProperty("hibernate.show_sql","true");
-        jpaProperties.setProperty("hibernate.hbm2ddl.auto","update");
+        jpaProperties.setProperty("hibernate.hbm2ddl.auto","update  ");
 
         entityManagerFactoryBean.setJpaProperties(jpaProperties);
         return entityManagerFactoryBean;

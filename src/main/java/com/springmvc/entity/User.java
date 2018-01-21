@@ -17,6 +17,8 @@ public class User implements Serializable{
 
     private String password;
 
+    private Boolean isEnable;
+
     public String getUsername() {
         return username;
     }
@@ -33,12 +35,21 @@ public class User implements Serializable{
         this.password = password;
     }
 
+    public Boolean getEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(Boolean enable) {
+        isEnable = enable;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", isEnable=" + isEnable +
                 '}';
     }
 }
