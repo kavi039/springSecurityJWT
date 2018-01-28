@@ -1,9 +1,12 @@
 package com.springmvc.config;
 
+import com.springmvc.filter.JWTAuthenticationFilter;
+import com.springmvc.filter.JWTAuthorizationFilter;
 import com.springmvc.handler.AuthenticationSuccess;
 import com.springmvc.handler.LogoutSuccess;
 import com.springmvc.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,9 +22,11 @@ import javax.sql.DataSource;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    @Qualifier("successHandler")
     AuthenticationSuccess authenticationSuccess;
 
     @Autowired
+    @Qualifier("logoutSuccessHandler")
     LogoutSuccess logoutSuccess;
 
     @Autowired
@@ -49,18 +54,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register/**","/registerUser/**","/registrationConfirmation").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .successHandler(authenticationSuccess)
-                .loginPage("/login").permitAll()
-                .loginProcessingUrl("/loginUrl")
-                .and()
-                .logout()
-                .logoutSuccessHandler(logoutSuccess)
-                .permitAll()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/doLogout","GET"))
-                .and()
-                .rememberMe()
-                .tokenRepository(persistentTokenRepository());
+//                .formLogin()
+//                .successHandler(authenticationSuccess)
+//                .loginPage("/login").permitAll()
+//                .loginProcessingUrl("/loginUrl")
+//                .and()
+                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager()));
+//                .logout()
+//                .logoutSuccessHandler(logoutSuccess)
+//                .permitAll()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/doLogout","GET"));
+//                .and()
+//                .rememberMe()
+//                .tokenRepository(persistentTokenRepository());
     }
 
     @Bean

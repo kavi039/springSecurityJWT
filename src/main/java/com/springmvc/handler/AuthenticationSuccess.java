@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
+@Component("successHandler")
 public class AuthenticationSuccess extends SimpleUrlAuthenticationSuccessHandler {
 
     @Override
